@@ -26,7 +26,8 @@ jobs:
       - name: S3에서 로그 다운로드
         run: |
           mkdir -p ./downloaded_logs/
-          aws s3 sync s3://${{ secrets.S3_BUCKET_NAME }}/server-logs/ ./downloaded_logs/
+          # 경로를 버킷 최상단으로 변경
+          aws s3 sync s3://${{ secrets.S3_BUCKET_NAME }}/ ./downloaded_logs/
 
       - name: 로그 파일을 아티팩트로 업로드
         uses: actions/upload-artifact@v4
