@@ -1,1 +1,51 @@
-<h1>Deploy Success!!!! from GitHub Actions</h1>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Dino Run Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-area">
+        <div id="score">00000</div>
+        <div id="dino">
+            <div class="dino-eye"></div>
+        </div>
+        <div id="cactus"></div>
+        <div class="ground-line"></div>
+    </div>
+    <p class="msg">SPACE 키를 눌러 점프하세요!</p>
+
+    <script>
+        const dino = document.getElementById("dino");
+        const cactus = document.getElementById("cactus");
+        const scoreElement = document.getElementById("score");
+        let score = 0;
+
+        function jump() {
+            if (!dino.classList.contains("jump-animation")) {
+                dino.classList.add("jump-animation");
+                setTimeout(() => dino.classList.remove("jump-animation"), 500);
+            }
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.code === "Space") jump();
+        });
+
+        setInterval(() => {
+            score++;
+            scoreElement.innerText = score.toString().padStart(5, '0');
+
+            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+            let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
+
+            // 충돌 판정 (공룡 위치와 선인장 위치가 겹칠 때)
+            if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 150) {
+                alert("GAME OVER! Score: " + score);
+                score = 0;
+            }
+        }, 10);
+    </script>
+</body>
+</html>
